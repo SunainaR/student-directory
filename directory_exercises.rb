@@ -17,20 +17,20 @@ end
 # Reads more like English
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(80)
+  puts "-------------".center(80)
 end
 # each_with_index added
 def print(students)
   counter = 0
   until counter == students.length
-    puts "#{counter + 1}. #{students[counter][:name]} from #{students[counter][:cohort]} cohort and enjoys #{students[counter][:hobby]}"
+    puts "#{counter + 1}.#{students[counter][:name]} from #{students[counter][:cohort]} cohort and enjoys #{students[counter][:hobby]}".center(80)
     counter += 1
   end
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students".center(80)
 end
 
 # nothing will happen until we call the methods
