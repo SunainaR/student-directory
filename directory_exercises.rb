@@ -2,11 +2,12 @@ def input_students
   puts "Please enter the names:"
   puts "To finish, just hit return twice"
   students = []
-  name = gets.chomp
+  name = gets.gsub("\n", "")
   while !name.empty? do
     students << {name: name, cohort: :november}
     students.count == 1 ? (puts "Now we have #{students.count} student") : (puts "Now we have #{students.count} students")
-    name = gets.chomp
+    name = gets.gsub("\n", "")
+    # strip removes leading and trailing whitespace
   end
   students
 end
