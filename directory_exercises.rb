@@ -1,3 +1,4 @@
+=begin
 def input_students
   puts "Please enter the names and then hobbies of the students "
   puts "To finish, just hit return twice"
@@ -16,21 +17,43 @@ def input_students
   end
   students
 end
+=end
 
-# Easier to see what is going on with methods
-# Reads more like English
+input_students = [
+  {name: "Dr. Hannibal Lecter", cohort: :november},
+  {name: "Darth Vader", cohort: :november},
+  {name: "Nurse Ratched", cohort: :december},
+  {name: "Michael Corleone", cohort: :november},
+  {name: "Alex DeLarge", cohort: :november},
+  {name: "The Wicked Witch of the West", cohort: :december},
+  {name: "Terminator", cohort: :november},
+  {name: "Freddy Krueger", cohort: :november},
+  {name: "The Joker", cohort: :november},
+  {name: "Joffrey Baratheon", cohort: :december},
+  {name: "Norman Bates", cohort: :november}
+]
 
 def print_header
   puts "The students of Villains Academy".center(80)
   puts "-------------".center(80)
 end
-# each_with_index added
+
 def print(students)
-  counter = 0
-  until counter == students.length
-    puts "#{counter + 1}.#{students[counter][:name]} (#{students[counter][:cohort]} cohort)".center(80)
-    counter += 1
+  # Try again with .map instead:
+  # puts students.map { |student| student[:cohort] }
+  grouped_students = students.group_by{|student| student[:cohort]}
+  grouped_students.each do |cohort, students|
+    puts "Student in the #{cohort} cohort:".center(80)
+    students.each do |student|
+      puts student[:name].center(80)
+    end
+    puts "\n"
+  end 
+=begin
+  students.each do |student|
+    puts "#{students[:name]} (#{students[:cohort]} cohort)".center(80)
   end
+=end
 end
 
 def print_footer(students)
