@@ -2,12 +2,11 @@ def input_students
   puts "Please enter the names:"
   puts "To finish, just hit return twice"
   students = []
-  name = gets.gsub("\n", "")
+  name = gets.chomp
   while !name.empty? do
     students << {name: name, cohort: :november}
     students.count == 1 ? (puts "Now we have #{students.count} student") : (puts "Now we have #{students.count} students")
-    name = gets.gsub("\n", "")
-    # strip removes leading and trailing whitespace
+    name = gets.chomp
   end
   students
 end
@@ -34,21 +33,13 @@ def print_header
 end
 
 def print(students)
-  # Try again with .map instead:
-  # puts students.map { |student| student[:cohort] }
-  grouped_students = students.group_by{|student| student[:cohort]}
-  grouped_students.each do |cohort, students|
-    puts "Student in the #{cohort} cohort:".center(80)
+  if students.length > 0
     students.each do |student|
-      puts student[:name].center(80)
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
     end
-    puts "\n"
-  end 
-=begin
-  students.each do |student|
-    puts "#{students[:name]} (#{students[:cohort]} cohort)".center(80)
+  # else
+  #   puts "There are no students in the directory".center(80)
   end
-=end
 end
 
 def print_footer(students)
