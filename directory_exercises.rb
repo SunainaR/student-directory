@@ -3,12 +3,16 @@ def input_students
   puts "To finish, just hit return twice"
   students = []
   name = gets.chomp
-  hobby = gets.chomp
+  cohort = gets.chomp.to_s
   while !name.empty? do
-    students << {name: name, cohort: :november, hobby: hobby}
+# default cohort value
+    if cohort == ""
+      cohort = :november
+    end
+    students << {name: name, cohort: cohort}
     puts "Now we have #{students.count} students"
     name = gets.chomp
-    hobby = gets.chomp
+    cohort = gets.chomp.to_s
   end
   students
 end
@@ -24,7 +28,7 @@ end
 def print(students)
   counter = 0
   until counter == students.length
-    puts "#{counter + 1}.#{students[counter][:name]} from #{students[counter][:cohort]} cohort and enjoys #{students[counter][:hobby]}".center(80)
+    puts "#{counter + 1}.#{students[counter][:name]} (#{students[counter][:cohort]} cohort)".center(80)
     counter += 1
   end
 end
