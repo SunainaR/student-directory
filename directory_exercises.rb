@@ -1,24 +1,17 @@
-=begin
 def input_students
-  puts "Please enter the names and then hobbies of the students "
+  puts "Please enter the names:"
   puts "To finish, just hit return twice"
   students = []
   name = gets.chomp
-  cohort = gets.chomp.to_s
   while !name.empty? do
-# default cohort value
-    if cohort == ""
-      cohort = :november
-    end
-    students << {name: name, cohort: cohort}
-    puts "Now we have #{students.count} students"
+    students << {name: name, cohort: :november}
+    students.count == 1 ? (puts "Now we have #{students.count} student") : (puts "Now we have #{students.count} students")
     name = gets.chomp
-    cohort = gets.chomp.to_s
   end
   students
 end
-=end
 
+=begin
 input_students = [
   {name: "Dr. Hannibal Lecter", cohort: :november},
   {name: "Darth Vader", cohort: :november},
@@ -32,6 +25,7 @@ input_students = [
   {name: "Joffrey Baratheon", cohort: :december},
   {name: "Norman Bates", cohort: :november}
 ]
+=end
 
 def print_header
   puts "The students of Villains Academy".center(80)
