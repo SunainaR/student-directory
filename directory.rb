@@ -24,6 +24,8 @@ def process(selection)
       show_students
     when "3"
       save_students
+    when "4"
+      load_students
     when "9"
       exit # This will cause the program to terminate
     else
@@ -35,6 +37,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
   puts "9. Exit"
 end
 
@@ -43,6 +46,8 @@ def show_students
   print_student_list
   print_footer
 end
+
+
 
 def input_students
   puts "Please enter the names of the students"
@@ -79,6 +84,18 @@ def save_students
     csv_line = student_data.join(",")
     # calling puts on file means will write there and not screen
     file.puts csv_line
+  end
+  file.close
+end
+
+def load_students
+  file = File.open("students.csv", "r")
+  #read lines inot an array and iterate over it
+  file.readlines.each do |line|
+  # parallel assignment of variables
+  name, cohort = line.chomp.split(',')
+  # Then store these values into a hash and set the instance variable
+    @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
 end
