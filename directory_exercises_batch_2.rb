@@ -16,6 +16,7 @@ def interactive_menu
     print_menu
     # Note that we're passing the user selection as an argument to the method
     process(STDIN.gets.chomp)
+    puts
   end
 end
 =begin
@@ -48,7 +49,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "4. Load the list from your file"
   puts "9. Exit"
 end
 
@@ -121,6 +122,11 @@ def user_input_students
   end
 end
 
+=begin
+4) Right now, when the user choses an option from our menu, 
+there's no way of them knowing if the action was successful. 
+Can you fix this and implement feedback messages for the user?
+=end
 def save_students
   # open the file for writing - returns a reference to the file
   file = File.open("students.csv", "w")
@@ -132,6 +138,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Students were succesfully saved to students.csv"
 end
 
 =begin
