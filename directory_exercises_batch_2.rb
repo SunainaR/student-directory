@@ -8,11 +8,7 @@ Interactive Menu Process:
 from command line with input file specified:
 ruby directory.rb students.csv
 =end
-=begin
-3) Continue refactoring the code. Which method is a bit too long? 
-What method names are not clear enough? 
-Anything else you'd change to make your code look more elegant? Why?
-=end
+
 # instance variable decalred here so it is accessible in all methods
 @students = []
 def interactive_menu
@@ -29,62 +25,20 @@ The lines in load_students() and input_students() are almost the same.
 This violates the DRY (Don't Repeat Yourself) principle. 
 How can you extract them into a method to fix this problem?
 =end
-def add_students(name, cohort)
-  @students << {name: name, cohort: cohort.to_sym}
-end
-
-# loading data from file automatically on startup
-def load_students (filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    add_students(name, cohort)
-  end
-  file.close
-end
 
 =begin
-2) How could you make the program load students.csv 
-by default if no file is given on startup? 
-Which methods would you need to change?
+3) Continue refactoring the code. Which method is a bit too long? 
+What method names are not clear enough? 
+Anything else you'd change to make your code look more elegant? Why?
 =end
-def try_load_students
-  filename = ARGV.first # first argument from command line
-  filename = "students.csv" if filename.nil?
-  if File.exists?(filename) # if the file exists
-    # run the load students method with the filename as an argument
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
-  else
-    puts "Sorry, #{filename} doesn't exist"
-    exit # quit the program
-  end
-end
-
-def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-  name = STDIN.gets.chomp
-  cohort = "november"
-  while !name.empty? do
-    add_students(name, cohort)
-    puts "Now we have #{@students.count} students"
-    name = STDIN.gets.chomp
-  end
-end
 
 def process(selection)
   case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-      load_students
-    when "9"
-      exit # This will cause the program to terminate
+    when "1" then user_input_students
+    when "2" then show_students
+    when "3" then save_students
+    when "4" then load_students
+    when "9" then exit # This will cause the program to terminate
     else
       puts "I don't know what you meant, try again"
   end
@@ -119,6 +73,54 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
+def add_students(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
+end
+=begin
+3 continued => renaming and refactoring load_students_from_file
+and check_file_exists to ensure methods do only one thing
+=end
+# loading data from file automatically on startup
+def load_students (filename = "students.csv")
+  check_file_exists
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    add_students(name, cohort)
+  end
+  file.close
+  puts "Loaded #{@students.count} from #{filename}"
+end
+
+=begin
+2) How could you make the program load students.csv 
+by default if no file is given on startup? 
+Which methods would you need to change?
+=end
+def check_file_exists
+  filename = ARGV.first # first argument from command line
+  filename = "students.csv" if filename.nil?
+  if File.exists?(filename) # if the file exists
+    # run the load students method with the filename as an argument
+    return filename
+  else
+    puts "Sorry, #{filename} doesn't exist"
+    exit # quit the program
+  end
+end
+
+def user_input_students
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+  name = STDIN.gets.chomp
+  cohort = "november"
+  while !name.empty? do
+    add_students(name, cohort)
+    puts "Now we have #{@students.count} students"
+    name = STDIN.gets.chomp
+  end
+end
+
 def save_students
   # open the file for writing - returns a reference to the file
   file = File.open("students.csv", "w")
@@ -146,5 +148,5 @@ def load_students
 end
 =end
 
-try_load_students
+load_students
 interactive_menu
