@@ -8,7 +8,11 @@ Interactive Menu Process:
 from command line with input file specified:
 ruby directory.rb students.csv
 =end
-
+=begin
+3) Continue refactoring the code. Which method is a bit too long? 
+What method names are not clear enough? 
+Anything else you'd change to make your code look more elegant? Why?
+=end
 # instance variable decalred here so it is accessible in all methods
 @students = []
 def interactive_menu
@@ -18,7 +22,13 @@ def interactive_menu
     process(STDIN.gets.chomp)
   end
 end
-
+=begin
+1) After we added the code to load the students from file,
+we ended up with adding the students to @students in two places. 
+The lines in load_students() and input_students() are almost the same. 
+This violates the DRY (Don't Repeat Yourself) principle. 
+How can you extract them into a method to fix this problem?
+=end
 def add_students(name, cohort)
   @students << {name: name, cohort: cohort.to_sym}
 end
@@ -33,9 +43,14 @@ def load_students (filename = "students.csv")
   file.close
 end
 
+=begin
+2) How could you make the program load students.csv 
+by default if no file is given on startup? 
+Which methods would you need to change?
+=end
 def try_load_students
   filename = ARGV.first # first argument from command line
-  return if filename.nil? # leave the method if it isn't given
+  filename = "students.csv" if filename.nil?
   if File.exists?(filename) # if the file exists
     # run the load students method with the filename as an argument
     load_students(filename)
